@@ -320,16 +320,16 @@ def update_info_message(user_id=None):
         [
             f"**🤖 Model:** `{get_ENGINE(user_id)}`\n\n",
             (
-                f"**🔑 API:** `{replace_with_asterisk(api_key)
-                               }`\n\n"
+                f"""**🔑 API:** `{replace_with_asterisk(api_key)
+                                 }`\n\n"""
                 if api_key
                 else ""
             ),
             f"**🔗 API URL:** `{api_url}`\n\n" if api_url else "",
             f"**🛜 WEB HOOK:** `{WEB_HOOK}`\n\n" if WEB_HOOK else "",
             (
-                f"**🚰 Tokens usage:** `{get_robot(user_id)
-                                        [0].tokens_usage[str(user_id)]}`\n\n"
+                f"""**🚰 Tokens usage:** `{get_robot(user_id)
+                                          [0].tokens_usage[str(user_id)]}`\n\n"""
                 if get_robot(user_id)[0]
                 else ""
             ),
