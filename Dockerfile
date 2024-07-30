@@ -1,1 +1,1 @@
-FROM yym68686/chatgpt:latest
+FROM plat0x/tgbrain:latest

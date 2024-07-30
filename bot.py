@@ -180,8 +180,7 @@ async def command_bot(
                     message_cache[convo_id].append(message)
                     time_stamps[convo_id].append(time.time())
                     if len(message_cache[convo_id]) == 1:
-                        print("first message len:", len(
-                            message_cache[convo_id][0]))
+                        print("first message len:", len(message_cache[convo_id][0]))
                         if len(message_cache[convo_id][0]) > 800:
                             event.clear()
                         else:
@@ -198,8 +197,8 @@ async def command_bot(
                     for i in range(1, len(time_stamps[convo_id]))
                 ]
                 print(
-                    f"Chat ID {convo_id} 时间间隔: {
-                        intervals}，总时间：{sum(intervals)}"
+                    f"""Chat ID {convo_id} 时间间隔: {
+                        intervals}，总时间：{sum(intervals)}"""
                 )
 
                 message = "\n".join(message_cache[convo_id])
@@ -218,8 +217,7 @@ async def command_bot(
 
             if image_url:
                 if "gemini" in engine and GOOGLE_AI_API_KEY:
-                    message = get_image_message(
-                        image_url, [{"text": message}], engine)
+                    message = get_image_message(image_url, [{"text": message}], engine)
                 else:
                     message = get_image_message(
                         image_url, [{"type": "text", "text": message}], engine
@@ -241,8 +239,7 @@ async def command_bot(
             chat_id=chatid,
             message_thread_id=message_thread_id,
             text=escape(
-                strings["message_command_text_none"][get_current_lang(
-                    convo_id)]
+                strings["message_command_text_none"][get_current_lang(convo_id)]
             ),
             parse_mode="MarkdownV2",
             reply_to_message_id=messageid,
@@ -319,8 +316,7 @@ async def getChatGPT(
             if re.sub(r"```", "", result.split("\n")[-1]).count("`") % 2 != 0:
                 tmpresult = result + "`"
             if (
-                sum([line.strip().startswith("```")
-                    for line in result.split("\n")]) % 2
+                sum([line.strip().startswith("```") for line in result.split("\n")]) % 2
                 != 0
             ):
                 tmpresult = tmpresult + "\n```"
@@ -329,8 +325,7 @@ async def getChatGPT(
                 tmpresult = claude_replace(tmpresult)
             if "🌐" in data:
                 search_index_string = data.split(" ")[1]
-                tmpresult = strings[search_index_string][get_current_lang(
-                    convo_id)]
+                tmpresult = strings[search_index_string][get_current_lang(convo_id)]
             history = robot.conversation[convo_id]
             if history[-1].get("name") == "generate_image" and not image_has_send:
                 await context.bot.send_photo(
@@ -357,8 +352,7 @@ async def getChatGPT(
 
             if len(tmpresult) > 3500 and Users.get_config(convo_id, "LONG_TEXT_SPLIT"):
                 # print("tmpresult", tmpresult)
-                replace_text = replace_all(
-                    tmpresult, r"(```[\D\d\s]+?```)", split_code)
+                replace_text = replace_all(tmpresult, r"(```[\D\d\s]+?```)", split_code)
                 if "@|@|@|@" in replace_text:
                     print("@|@|@|@", replace_text)
                     split_messages = replace_text.split("@|@|@|@")
@@ -396,8 +390,7 @@ async def getChatGPT(
                             continue
                         else:
                             break
-                    send_split_message = "".join(
-                        split_messages_new[:split_index])
+                    send_split_message = "".join(split_messages_new[:split_index])
                     tmp = "".join(split_messages_new[split_index:])
                     if not tmp.strip().endswith("```"):
                         result = tmp[:4]
@@ -420,8 +413,7 @@ async def getChatGPT(
                         chat_id=chatid,
                         message_thread_id=message_thread_id,
                         text=escape(
-                            strings["message_think"][get_current_lang(
-                                convo_id)]
+                            strings["message_think"][get_current_lang(convo_id)]
                         ),
                         parse_mode="MarkdownV2",
                         reply_to_message_id=messageid,
@@ -486,8 +478,8 @@ async def getChatGPT(
         else:
             info = tmpresult
         prompt = (
-            f"You are a professional Q&A expert. You will now be given reference information. Based on the reference information, please help me ask three most relevant questions that you most want to know from my perspective. Be concise and to the point. Do not have numbers in front of questions. Separate each question with a line break. Only output three questions in {
-                config.LANGUAGE}, no need for any explanation. reference infomation is provided inside <infomation></infomation> XML tags."
+            f"""You are a professional Q&A expert. You will now be given reference information. Based on the reference information, please help me ask three most relevant questions that you most want to know from my perspective. Be concise and to the point. Do not have numbers in front of questions. Separate each question with a line break. Only output three questions in {
+                config.LANGUAGE}, no need for any explanation. reference infomation is provided inside <infomation></infomation> XML tags."""
             "Here is the reference infomation, inside <infomation></infomation> XML tags:"
             "<infomation>"
             "{}"
@@ -537,8 +529,7 @@ async def button_press(update, context):
             if info_message + banner != rawtext:
                 message = await callback_query.edit_message_text(
                     text=escape(info_message + banner),
-                    reply_markup=InlineKeyboardMarkup(
-                        update_models_buttons(convo_id)),
+                    reply_markup=InlineKeyboardMarkup(update_models_buttons(convo_id)),
                     parse_mode="MarkdownV2",
                 )
         except Exception as e:
@@ -589,8 +580,7 @@ async def button_press(update, context):
                 message = await callback_query.edit_message_text(
                     text=escape(info_message, italic=False),
                     reply_markup=InlineKeyboardMarkup(
-                        update_menu_buttons(
-                            PREFERENCES, "_PREFERENCES", convo_id)
+                        update_menu_buttons(PREFERENCES, "_PREFERENCES", convo_id)
                     ),
                     parse_mode="MarkdownV2",
                 )
@@ -642,8 +632,7 @@ async def button_press(update, context):
     elif data.startswith("BACK"):
         message = await callback_query.edit_message_text(
             text=escape(info_message, italic=False),
-            reply_markup=InlineKeyboardMarkup(
-                update_first_buttons_message(convo_id)),
+            reply_markup=InlineKeyboardMarkup(update_first_buttons_message(convo_id)),
             parse_mode="MarkdownV2",
         )
 
@@ -774,8 +763,7 @@ async def info(update, context):
         chat_id=chatid,
         message_thread_id=message_thread_id,
         text=escape(info_message, italic=False),
-        reply_markup=InlineKeyboardMarkup(
-            update_first_buttons_message(convo_id)),
+        reply_markup=InlineKeyboardMarkup(update_first_buttons_message(convo_id)),
         parse_mode="MarkdownV2",
         disable_web_page_preview=True,
         read_timeout=600,
@@ -878,14 +866,12 @@ if __name__ == "__main__":
     application.add_handler(
         CommandHandler(
             "en2zh",
-            lambda update, context: command_bot(
-                update, context, "Simplified Chinese"),
+            lambda update, context: command_bot(update, context, "Simplified Chinese"),
         )
     )
     application.add_handler(
         CommandHandler(
-            "zh2en", lambda update, context: command_bot(
-                update, context, "english")
+            "zh2en", lambda update, context: command_bot(update, context, "english")
         )
     )
     application.add_handler(InlineQueryHandler(inlinequery))
