@@ -24,8 +24,7 @@ PORT = int(os.environ.get("PORT", "8080"))
 BOT_TOKEN = os.environ.get("BOT_TOKEN", None)
 
 GPT_ENGINE = os.environ.get("GPT_ENGINE", "gpt-4o")
-API_URL = os.environ.get(
-    "API_URL", "https://api.openai.com/v1/chat/completions")
+API_URL = os.environ.get("API_URL", "https://api.openai.com/v1/chat/completions")
 API = os.environ.get("API", None)
 WEB_HOOK = os.environ.get("WEB_HOOK", None)
 CHAT_MODE = os.environ.get("CHAT_MODE", "global")
@@ -128,8 +127,7 @@ class UserConfig:
 
     def get_config(self, user_id=None, parameter_name=None):
         if parameter_name not in self.parameter_name_list:
-            raise ValueError(
-                "parameter_name is not in the parameter_name_list")
+            raise ValueError("parameter_name is not in the parameter_name_list")
         if self.mode == "global":
             return self.users["global"][parameter_name]
         if self.mode == "multiusers":
@@ -138,8 +136,7 @@ class UserConfig:
 
     def set_config(self, user_id=None, parameter_name=None, value=None):
         if parameter_name not in self.parameter_name_list:
-            raise ValueError(
-                "parameter_name is not in the parameter_name_list")
+            raise ValueError("parameter_name is not in the parameter_name_list")
         if self.mode == "global":
             self.users["global"][parameter_name] = value
         if self.mode == "multiusers":
@@ -356,16 +353,13 @@ def reset_ENGINE(chat_id, message=None):
     claude_systemprompt = Users.get_config(chat_id, "claude_systemprompt")
     if api_key and ChatGPTbot:
         if "claude" in engine:
-            ChatGPTbot.reset(convo_id=str(chat_id),
-                             system_prompt=claude_systemprompt)
+            ChatGPTbot.reset(convo_id=str(chat_id), system_prompt=claude_systemprompt)
         else:
             ChatGPTbot.reset(convo_id=str(chat_id), system_prompt=systemprompt)
     if CLAUDE_API and claudeBot:
-        claudeBot.reset(convo_id=str(chat_id),
-                        system_prompt=claude_systemprompt)
+        claudeBot.reset(convo_id=str(chat_id), system_prompt=claude_systemprompt)
     if CLAUDE_API and claude3Bot:
-        claude3Bot.reset(convo_id=str(chat_id),
-                         system_prompt=claude_systemprompt)
+        claude3Bot.reset(convo_id=str(chat_id), system_prompt=claude_systemprompt)
     if GROQ_API_KEY and groqBot:
         groqBot.reset(convo_id=str(chat_id), system_prompt=systemprompt)
     if GOOGLE_AI_API_KEY and gemini_Bot:
@@ -477,7 +471,7 @@ def create_buttons(
 
 
 initial_model = [
-    "gpt-4o",
+    "meta-llama/Meta-Llama-3.1-8B-Instruct",
 ]
 
 if GROQ_API_KEY:
@@ -525,8 +519,7 @@ if CUSTOM_MODELS:
 else:
     CUSTOM_MODELS_LIST = None
 if CUSTOM_MODELS_LIST:
-    delete_models = [model[1:]
-                     for model in CUSTOM_MODELS_LIST if model[0] == "-"]
+    delete_models = [model[1:] for model in CUSTOM_MODELS_LIST if model[0] == "-"]
     for target in delete_models:
         for model in initial_model:
             if target in model:
@@ -551,8 +544,7 @@ def update_models_buttons(chatid=None):
     buttons = create_buttons(initial_model, Suffix="_MODELS")
     buttons.append(
         [
-            InlineKeyboardButton(
-                strings["button_back"][lang], callback_data="BACK"),
+            InlineKeyboardButton(strings["button_back"][lang], callback_data="BACK"),
         ],
     )
     return buttons
@@ -594,8 +586,7 @@ def update_menu_buttons(setting, _strings, chatid):
     )
     buttons.append(
         [
-            InlineKeyboardButton(
-                strings["button_back"][lang], callback_data="BACK"),
+            InlineKeyboardButton(strings["button_back"][lang], callback_data="BACK"),
         ],
     )
     return buttons
