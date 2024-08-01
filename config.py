@@ -32,8 +32,7 @@ GET_MODELS = (os.environ.get("GET_MODELS", "False") == "False") == False
 
 GROQ_API_KEY = os.environ.get("GROQ_API_KEY", None)
 GOOGLE_AI_API_KEY = os.environ.get("GOOGLE_AI_API_KEY", None)
-
-PREFERENCES = {
+PEFERENCES = {
     "PASS_HISTORY": (os.environ.get("PASS_HISTORY", "True") == "False") == False,
     "IMAGEQA": (os.environ.get("IMAGEQA", "False") == "True") == False,
     "LONG_TEXT": (os.environ.get("LONG_TEXT", "True") == "False") == False,
